@@ -1,61 +1,49 @@
 package com.globalsoftwaresupport.spring.controllers;
 
-import com.globalsoftwaresupport.spring.dto.UserRegistrationRequest;
-import com.globalsoftwaresupport.spring.repositories.dao.RoleRepository;
-import com.globalsoftwaresupport.spring.repositories.dao.UserRepository;
-import com.globalsoftwaresupport.spring.repositories.entity.Role;
-import com.globalsoftwaresupport.spring.repositories.entity.User;
+import com.globalsoftwaresupport.spring.dto.request.UserRegistrationRequest;
+import com.globalsoftwaresupport.spring.dto.response.UsersResponse;
+import com.globalsoftwaresupport.spring.services.interfaces.IRegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/register")
 public class RegistrationController {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final IRegistrationService registrationService;
 
     @Autowired
-    private RoleRepository roleRepository;
+    public RegistrationController(IRegistrationService registrationService) {
+        this.registrationService = registrationService;
+    }
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-
-    @PostMapping
+    @PostMapping("/add")
     public ResponseEntity<String> registerUser(@RequestBody UserRegistrationRequest registrationRequest) {
 
-        if (registrationRequest.getPassword().equals(registrationRequest.getConfirmPassword())) {
+        ResponseEntity<String> Passwords_do_not_match = passwordValidationsRegistrationRequest(registrationRequest);
+        if (Passwords_do_not_match != null) return Passwords_do_not_match;
+
+        registrationService.registerUser(registrationRequest);
+
+        return ResponseEntity.ok("User registered successfully User: " + registrationRequest.getUsername());
+    }
+
+    @GetMapping("/getall")
+    public ResponseEntity<List<UsersResponse>> getAllUsers() {
+        return ResponseEntity.ok(registrationService.findAllUsers());
+    }
+
+    private ResponseEntity<String> passwordValidationsRegistrationRequest(UserRegistrationRequest registrationRequest) {
+        if (!registrationRequest.getPassword().equals(registrationRequest.getConfirmPassword())) {
             return ResponseEntity.badRequest().body("Passwords do not match");
         }
 
-        if (userRepository.findByUsername(registrationRequest.getUsername()).isPresent()) {
+        if (registrationService.findUserByUsername(registrationRequest.getUsername()) != null) {
             return ResponseEntity.badRequest().body("Username is already in use");
         }
-
-        //CREATE NEW USER AND SET ROLES this is going to go on a service layer.
-
-
-        User user = new User();
-        user.setUsername(registrationRequest.getUsername());
-        user.setPassword(bCryptPasswordEncoder.encode(registrationRequest.getPassword()));
-
-        //Assign default role
-
-        Role userRole = roleRepository.findByName("ROLE_USER").orElseThrow(() -> new RuntimeException("Role not found"));
-
-        user.setRoles(Collections.singleton(userRole));
-
-        userRepository.save(user);
-
-        return ResponseEntity.ok("User registered successfully");
-
+        return null;
     }
 }

@@ -1,4 +1,4 @@
-package com.globalsoftwaresupport.spring.dto;
+package com.globalsoftwaresupport.spring.dto.request;
 
 public class UserRegistrationRequest {
 
