@@ -11,12 +11,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/register")
-public class RegistrationController {
+public class UserController {
+
 
     private final IRegistrationService registrationService;
 
     @Autowired
-    public RegistrationController(IRegistrationService registrationService) {
+    public UserController(IRegistrationService registrationService) {
         this.registrationService = registrationService;
     }
 

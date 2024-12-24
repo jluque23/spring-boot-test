@@ -8,6 +8,7 @@ import com.globalsoftwaresupport.spring.repositories.entity.Role;
 import com.globalsoftwaresupport.spring.repositories.entity.User;
 import com.globalsoftwaresupport.spring.services.interfaces.IRegistrationService;
 import com.globalsoftwaresupport.spring.services.interfaces.IRoleService;
+import com.globalsoftwaresupport.spring.utils.UserGeneration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,12 +23,14 @@ public class RegistrationServiceImpl implements IRegistrationService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final IRoleService roleService;
+    private final UserGeneration userGenerator;
 
     @Autowired
     public RegistrationServiceImpl(UserRepository userRepository, IRoleService roleService) {
         this.userRepository = userRepository;
         this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
         this.roleService = roleService;
+        this.userGenerator = new UserGeneration();
     }
 
     @Override
@@ -40,12 +43,12 @@ public class RegistrationServiceImpl implements IRegistrationService {
 
     @Override
     public void registerUser(UserRegistrationRequest userRegistrationRequest) {
+        User userToRegister = userGenerator.generateUser(userRegistrationRequest);
 
-        User user = new User();
-        user.setUsername(userRegistrationRequest.getUsername());
-        user.setPassword(bCryptPasswordEncoder.encode(userRegistrationRequest.getPassword()));
-        user.setRoles(Collections.singleton(roleService.getRole(Roles.ROLE_USER.getRoleName())));
-        userRepository.save(user);
+        userToRegister.setPasswordHash(bCryptPasswordEncoder.encode(userRegistrationRequest.getPassword()));
+        userToRegister.setRoles(Collections.singleton(roleService.getRole(Roles.ROLE_USER.getRoleName())));
+
+        userRepository.save(userToRegister);
     }
 
     @Override

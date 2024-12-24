@@ -33,10 +33,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         String ADMIN = "ADMIN";
         String USER = "USER";
 
-        http
+                http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/register/add").hasAnyRole(ADMIN, USER)
+                .antMatchers("/api/register/getall").hasAnyRole(ADMIN, USER)
                 .antMatchers("/api/register/add").hasRole(ADMIN)
                 .anyRequest().authenticated()
                 .and()
