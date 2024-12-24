@@ -2,15 +2,17 @@ package com.globalsoftwaresupport.spring.repositories.entity;
 
 import javax.persistence.*;
 
+@Entity
+@Table(name = "order_item")
 public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "order_id")
-    private Order orderId;
+    private Order order_id;
 
     private Long productId;
 
@@ -28,12 +30,12 @@ public class OrderItem {
         this.id = id;
     }
 
-    public Order getOrderId() {
-        return orderId;
+    public Order getOrder_id() {
+        return order_id;
     }
 
-    public void setOrderId(Order orderId) {
-        this.orderId = orderId;
+    public void setOrder_id(Order order_id) {
+        this.order_id = order_id;
     }
 
     public Long getProductId() {

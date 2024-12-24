@@ -1,9 +1,14 @@
 package com.globalsoftwaresupport.spring.repositories.entity;
 
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
+@Table(name ="inventory")
 public class Inventory {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long productId;

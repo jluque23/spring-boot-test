@@ -1,14 +1,8 @@
-package com.globalsoftwaresupport.spring.repositories.entity;
+package com.globalsoftwaresupport.spring.dto.request;
 
-import javax.persistence.*;
 import java.util.Date;
 
-@Entity
-@Table(name = "product")
-public class Product {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ProductRequest {
     private Long id;
 
     private String name;

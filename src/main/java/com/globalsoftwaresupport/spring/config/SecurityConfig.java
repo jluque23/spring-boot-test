@@ -33,11 +33,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         String ADMIN = "ADMIN";
         String USER = "USER";
 
-                http
+        http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/register/getall").hasAnyRole(ADMIN, USER)
-                .antMatchers("/api/register/add").hasRole(ADMIN)
+                .antMatchers("/api/users/getall").hasAnyRole(ADMIN, USER)
+                .antMatchers("/api/users/add").hasRole(ADMIN)
+                .antMatchers("/api/products/getall").hasAnyRole(ADMIN, USER)
+                .antMatchers("/api/products/add").hasRole(ADMIN)
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic(); // or use formLogin() for web forms

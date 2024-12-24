@@ -1,9 +1,6 @@
 package com.globalsoftwaresupport.spring.dto.request;
 
-import com.globalsoftwaresupport.spring.repositories.entity.Role;
-
 import java.util.Date;
-import java.util.Set;
 
 public class UserRegistrationRequest {
 
