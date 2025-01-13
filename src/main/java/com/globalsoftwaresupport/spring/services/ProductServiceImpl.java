@@ -1,7 +1,7 @@
 package com.globalsoftwaresupport.spring.services;
 
 import com.globalsoftwaresupport.spring.dto.request.ProductRequest;
-import com.globalsoftwaresupport.spring.dto.response.ProductsResponse;
+import com.globalsoftwaresupport.spring.dto.response.ProductResponse;
 import com.globalsoftwaresupport.spring.repositories.dao.ProductRepository;
 import com.globalsoftwaresupport.spring.repositories.entity.Product;
 import com.globalsoftwaresupport.spring.services.interfaces.IProductService;
@@ -25,12 +25,12 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public List<ProductsResponse> findAllProducts() {
+    public List<ProductResponse> findAllProducts() {
 
         List<Product> productsList = productRepository.findAll();
 
         return productsList.stream()
-                .map(product -> new ProductsResponse(product.getId(),
+                .map(product -> new ProductResponse(product.getId(),
                         product.getName(),
                         product.getDescription(),
                         product.getPrice(),
@@ -52,7 +52,7 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public ProductsResponse findProductById(Long id) {
+    public ProductResponse findProductById(Long id) {
         Optional<Product> productOptional = productRepository.findById(id);
 
         if(productOptional.isPresent()){
@@ -60,6 +60,31 @@ public class ProductServiceImpl implements IProductService {
             return productGenerator.generateProductsResponse(product);
         }
 
-        return new ProductsResponse();
+        return new ProductResponse();
+    }
+
+    @Override
+    public void updateProduct(ProductRequest productRequest) {
+        Optional<Product> productOptional = productRepository.findById(productRequest.getId());
+
+        if(productOptional.isPresent()){
+            Product product = productOptional.get();
+
+            product.setId(productOptional.get().getId());
+            productRequestToProduct(productRequest, product);
+
+            productRepository.save(product);
+        }
+    }
+
+    public static void productRequestToProduct(ProductRequest productRequest, Product product) {
+        product.setName(productRequest.getName());
+        product.setDescription(productRequest.getDescription());
+        product.setPrice(productRequest.getPrice());
+        product.setStockQuantity(productRequest.getStockQuantity());
+        product.setCategory(productRequest.getCategory());
+        product.setCreatedAt(productRequest.getCreatedAt());
+        product.setUpdatedAt(productRequest.getUpdatedAt());
+        product.setActive(productRequest.isActive());
     }
 }

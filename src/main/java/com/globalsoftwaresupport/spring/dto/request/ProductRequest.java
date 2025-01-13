@@ -21,6 +21,21 @@ public class ProductRequest {
 
     private boolean isActive;
 
+    public ProductRequest() {
+    }
+
+    public ProductRequest(Long id, String name, String description, Double price, Integer stockQuantity, String category, Date createdAt, Date updatedAt, boolean isActive) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.stockQuantity = stockQuantity;
+        this.category = category;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.isActive = isActive;
+    }
+
     public Long getId() {
         return id;
     }

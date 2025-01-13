@@ -1,5 +1,7 @@
 package com.globalsoftwaresupport.spring.views;
 
+import com.globalsoftwaresupport.spring.views.products.ProductsView;
+import com.globalsoftwaresupport.spring.views.users.UsersRegistrationView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -23,6 +25,8 @@ public class MainView extends AppLayout {
 
     private Tabs menu;
     private H1 viewTitle;
+
+    private final String PRODUCT = "Products";
 
     public MainView() {
 
@@ -73,7 +77,7 @@ public class MainView extends AppLayout {
         logoLayout.setId("logo");
         logoLayout.setAlignItems(FlexComponent.Alignment.CENTER);
 //        logoLayout.add(new Image("images/luffy.png", "My Project logo"));
-        logoLayout.add(new H1("My Project"));
+        logoLayout.add(new H1("Testing Project"));
 
         // Display the logo and the menu in the drawer
         layout.add(logoLayout, menu);
@@ -91,8 +95,8 @@ public class MainView extends AppLayout {
 
     private Component[] createMenuItems() {
         return new Tab[]{
-                createTab("Hello World", HelloWorldView.class),
-                createTab("Card List", CardListView.class),
+                createTab("Products View", ProductsView.class),
+                createTab("User Registration View", UsersRegistrationView.class),
                 createTab("About", AboutView.class)};
     }
 

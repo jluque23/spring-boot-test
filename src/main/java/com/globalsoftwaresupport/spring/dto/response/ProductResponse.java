@@ -2,7 +2,7 @@ package com.globalsoftwaresupport.spring.dto.response;
 
 import java.util.Date;
 
-public class ProductsResponse {
+public class ProductResponse {
 
     private Long product_id;
     private String product_name;
@@ -14,10 +14,10 @@ public class ProductsResponse {
     private Date updated_date;
     private boolean deleted;
 
-    public ProductsResponse() {
+    public ProductResponse() {
     }
 
-    public ProductsResponse(Long product_id, String product_name, String product_description, Double product_price, Integer stock_quantity, String category, Date created_date, Date updated_date, boolean deleted) {
+    public ProductResponse(Long product_id, String product_name, String product_description, Double product_price, Integer stock_quantity, String category, Date created_date, Date updated_date, boolean deleted) {
         this.product_id = product_id;
         this.product_name = product_name;
         this.product_description = product_description;

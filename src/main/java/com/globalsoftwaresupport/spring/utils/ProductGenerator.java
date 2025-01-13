@@ -1,29 +1,27 @@
 package com.globalsoftwaresupport.spring.utils;
 
 import com.globalsoftwaresupport.spring.dto.request.ProductRequest;
-import com.globalsoftwaresupport.spring.dto.response.ProductsResponse;
+import com.globalsoftwaresupport.spring.dto.response.ProductResponse;
 import com.globalsoftwaresupport.spring.repositories.entity.Product;
+import com.globalsoftwaresupport.spring.services.ProductServiceImpl;
+
+import java.util.Date;
 
 public class ProductGenerator {
 
     public Product generateProduct(ProductRequest productRequest) {
         Product product = new Product();
         product.setId(productRequest.getId());
-        product.setName(productRequest.getName());
-        product.setDescription(productRequest.getDescription());
-        product.setPrice(productRequest.getPrice());
-        product.setStockQuantity(productRequest.getStockQuantity());
-        product.setCategory(productRequest.getCategory());
-        product.setCreatedAt(productRequest.getCreatedAt());
-        product.setUpdatedAt(productRequest.getUpdatedAt());
-        product.setActive(productRequest.isActive());
+        ProductServiceImpl.productRequestToProduct(productRequest, product);
+        product.setCreatedAt(new Date());
+        product.setUpdatedAt(new Date());
 
         return product;
     }
 
-    public ProductsResponse generateProductsResponse(Product product) {
+    public ProductResponse generateProductsResponse(Product product) {
 
-        return new ProductsResponse(product.getId(),
+        return new ProductResponse(product.getId(),
                 product.getName(),
                 product.getDescription(),
                 product.getPrice(),

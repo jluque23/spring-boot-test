@@ -1,7 +1,7 @@
 package com.globalsoftwaresupport.spring.controllers;
 
 import com.globalsoftwaresupport.spring.dto.request.ProductRequest;
-import com.globalsoftwaresupport.spring.dto.response.ProductsResponse;
+import com.globalsoftwaresupport.spring.dto.response.ProductResponse;
 import com.globalsoftwaresupport.spring.services.interfaces.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,12 +23,12 @@ public class ProductController {
     }
 
     @GetMapping("/getall")
-    public ResponseEntity<List<ProductsResponse>> getAllProducts(){
+    public ResponseEntity<List<ProductResponse>> getAllProducts(){
         return ResponseEntity.ok(productService.findAllProducts());
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<ProductsResponse> getProductById(@PathVariable long id){
+    public ResponseEntity<ProductResponse> getProductById(@PathVariable long id){
         return ResponseEntity.ok(productService.findProductById(id));
     }
 

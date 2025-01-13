@@ -1,16 +1,17 @@
 package com.globalsoftwaresupport.spring.services.interfaces;
 
 import com.globalsoftwaresupport.spring.dto.request.ProductRequest;
-import com.globalsoftwaresupport.spring.dto.response.ProductsResponse;
-import com.globalsoftwaresupport.spring.repositories.entity.Product;
+import com.globalsoftwaresupport.spring.dto.response.ProductResponse;
 
 import java.util.List;
 
 public interface IProductService {
 
-    List<ProductsResponse> findAllProducts();
+    List<ProductResponse> findAllProducts();
 
     void saveProduct(ProductRequest productRequest);
 
-    ProductsResponse findProductById(Long id);
+    ProductResponse findProductById(Long id);
+
+    void updateProduct(ProductRequest productRequest);
 }

@@ -1,32 +1,17 @@
-package com.globalsoftwaresupport.spring.repositories.entity;
+package com.globalsoftwaresupport.spring.dto.request;
 
-import javax.persistence.*;
 import java.util.Date;
 
-@Entity
-@Table(name = "product")
-public class Product {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ProductGridDTO {
     private Long id;
-
-    private String name;
-
-    @Column(unique = true)
-    private String description;
-
-    private Double price;
-
-    private Integer stockQuantity;
-
     private String category;
-
-    private Date createdAt;
-
-    private Date updatedAt;
-
+    private String name;
+    private String description;
     private boolean isActive;
+    private double price;
+    private Integer stockQuantity;
+    private Date updatedAt;
+    private String createdAt;
 
     public Long getId() {
         return id;
@@ -34,6 +19,14 @@ public class Product {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getName() {
@@ -52,11 +45,19 @@ public class Product {
         this.description = description;
     }
 
-    public Double getPrice() {
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -68,22 +69,6 @@ public class Product {
         this.stockQuantity = stockQuantity;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public Date getUpdatedAt() {
         return updatedAt;
     }
@@ -92,11 +77,11 @@ public class Product {
         this.updatedAt = updatedAt;
     }
 
-    public boolean isActive() {
-        return isActive;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 }
